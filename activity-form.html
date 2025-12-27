@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加活动 - 织金县文明传播志愿服务队</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>志愿服务队</h2>
+                <p>织金县文明传播</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/volunteer/index" class="nav-item">
+                    <span>📊</span> 首页
+                </a>
+                <a href="/volunteer/members" class="nav-item">
+                    <span>👥</span> 志愿者管理
+                </a>
+                <a href="/volunteer/activities" class="nav-item active">
+                    <span>📅</span> 活动管理
+                </a>
+                <a href="/volunteer/users" class="nav-item">
+                    <span>👤</span> 用户管理
+                </a>
+                <a href="/volunteer/logout" class="nav-item logout">
+                    <span>🚪</span> 退出登录
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>添加活动</h1>
+                <p class="welcome-text">创建新的志愿服务活动</p>
+            </div>
+
+            <form th:action="@{/volunteer/activities/save}" method="post" class="form-container">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>活动编号 *</label>
+                        <input type="text" name="activityId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>活动名称 *</label>
+                        <input type="text" name="name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>活动类型 *</label>
+                        <select name="type" required>
+                            <option value="">请选择</option>
+                            <option value="文明宣传">文明宣传</option>
+                            <option value="环境保护">环境保护</option>
+                            <option value="助老扶幼">助老扶幼</option>
+                            <option value="社区服务">社区服务</option>
+                            <option value="文化传承">文化传承</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>活动状态 *</label>
+                        <select name="status" required>
+                            <option value="">请选择</option>
+                            <option value="筹备中">筹备中</option>
+                            <option value="进行中">进行中</option>
+                            <option value="已结束">已结束</option>
+                            <option value="已取消">已取消</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>开始时间 *</label>
+                        <input type="datetime-local" name="startTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label>结束时间 *</label>
+                        <input type="datetime-local" name="endTime" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>活动地点 *</label>
+                        <input type="text" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label>参与人数 *</label>
+                        <input type="number" name="participants" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>负责人</label>
+                        <input type="text" name="organizer">
+                    </div>
+                    <div class="form-group">
+                        <label>联系电话</label>
+                        <input type="tel" name="contactPhone">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>活动描述</label>
+                    <textarea name="description" rows="4" placeholder="请输入活动详细描述"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>备注</label>
+                    <textarea name="remarks" rows="2" placeholder="其他备注信息"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">💾 保存</button>
+                    <a href="/volunteer/activities" class="btn btn-secondary">取消</a>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

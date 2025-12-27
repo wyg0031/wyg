@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>志愿者管理 - 织金县文明传播志愿服务队</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>织金县文明传播志愿服务队</h2>
+            <p>人员信息管理系统</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="/volunteer/" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span>首页</span>
+            </a>
+            <a href="/volunteer/members" class="nav-item active">
+                <span class="nav-icon">👥</span>
+                <span>志愿者管理</span>
+            </a>
+            <a href="/volunteer/activities" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span>活动管理</span>
+            </a>
+            <a href="/volunteer/users" class="nav-item">
+                <span class="nav-icon">🔐</span>
+                <span>账号管理</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>志愿者管理</h1>
+            <div class="user-info">
+                <span th:text="${#authentication.name}">管理员</span>
+                <a href="/volunteer/logout" class="logout-btn">退出</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="toolbar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索志愿者..." th:value="${keyword}">
+                    <button onclick="searchMembers()">🔍 搜索</button>
+                </div>
+                <div class="action-buttons">
+                    <a href="/volunteer/members/new" class="btn btn-primary">➕ 添加志愿者</a>
+                    <a href="/volunteer/members/export" class="btn btn-success">📥 导出Excel</a>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>出生日期</th>
+                            <th>电话</th>
+                            <th>民族</th>
+                            <th>学历</th>
+                            <th>政治面貌</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="member : ${members}">
+                            <td th:text="${member.memberId}"></td>
+                            <td th:text="${member.name}"></td>
+                            <td th:text="${member.gender}"></td>
+                            <td th:text="${member.birthDate != null ? #temporals.format(member.birthDate, 'yyyy-MM-dd') : ''}"></td>
+                            <td th:text="${member.phone}"></td>
+                            <td th:text="${member.nation}"></td>
+                            <td th:text="${member.education}"></td>
+                            <td th:text="${member.political}"></td>
+                            <td>
+                                <a th:href="@{/volunteer/members/edit/{id}(id=${member.id})}" class="btn btn-sm btn-info">编辑</a>
+                                <a th:href="@{/volunteer/members/delete/{id}(id=${member.id})}" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除吗？')">删除</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(members)}">
+                            <td colspan="9" class="no-data">暂无数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" th:if="${totalPages > 1}">
+                <span th:if="${currentPage > 0}">
+                    <a th:href="@{/volunteer/members(page=${currentPage - 1}, keyword=${keyword})}">上一页</a>
+                </span>
+                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{/volunteer/members(page=${i}, keyword=${keyword})}" th:class="${i == currentPage ? 'active' : ''}" th:text="${i + 1}"></a>
+                </span>
+                <span th:if="${currentPage < totalPages - 1}">
+                    <a th:href="@{/volunteer/members(page=${currentPage + 1}, keyword=${keyword})}">下一页</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function searchMembers() {
+            const keyword = document.getElementById('searchInput').value;
+            window.location.href = '/volunteer/members?keyword=' + encodeURIComponent(keyword);
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchMembers();
+            }
+        });
+    </script>
+</body>
+</html>

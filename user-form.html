@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加用户 - 织金县文明传播志愿服务队</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>志愿服务队</h2>
+                <p>织金县文明传播</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/volunteer/index" class="nav-item">
+                    <span>📊</span> 首页
+                </a>
+                <a href="/volunteer/members" class="nav-item">
+                    <span>👥</span> 志愿者管理
+                </a>
+                <a href="/volunteer/activities" class="nav-item">
+                    <span>📅</span> 活动管理
+                </a>
+                <a href="/volunteer/users" class="nav-item active">
+                    <span>👤</span> 用户管理
+                </a>
+                <a href="/volunteer/logout" class="nav-item logout">
+                    <span>🚪</span> 退出登录
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>添加用户</h1>
+                <p class="welcome-text">创建新的系统用户</p>
+            </div>
+
+            <form th:action="@{/volunteer/users/save}" method="post" class="form-container">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>用户名 *</label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>密码 *</label>
+                        <input type="password" name="password" required minlength="6">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>角色 *</label>
+                        <select name="role" required>
+                            <option value="">请选择</option>
+                            <option value="ADMIN">管理员</option>
+                            <option value="USER">普通用户</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>状态 *</label>
+                        <select name="enabled" required>
+                            <option value="true">启用</option>
+                            <option value="false">禁用</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>电话</label>
+                        <input type="tel" name="phone">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">💾 保存</button>
+                    <a href="/volunteer/users" class="btn btn-secondary">取消</a>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

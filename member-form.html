@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加志愿者 - 织金县文明传播志愿服务队</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>织金县文明传播志愿服务队</h2>
+            <p>人员信息管理系统</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="/volunteer/" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span>首页</span>
+            </a>
+            <a href="/volunteer/members" class="nav-item active">
+                <span class="nav-icon">👥</span>
+                <span>志愿者管理</span>
+            </a>
+            <a href="/volunteer/activities" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span>活动管理</span>
+            </a>
+            <a href="/volunteer/users" class="nav-item">
+                <span class="nav-icon">🔐</span>
+                <span>账号管理</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>添加志愿者</h1>
+            <div class="user-info">
+                <span th:text="${#authentication.name}">管理员</span>
+                <a href="/volunteer/logout" class="logout-btn">退出</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <form th:action="@{/volunteer/members/save}" method="post" class="form-container">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>编号 *</label>
+                        <input type="text" name="memberId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>姓名 *</label>
+                        <input type="text" name="name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>性别 *</label>
+                        <select name="gender" required>
+                            <option value="">请选择</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>出生日期</label>
+                        <input type="date" name="birthDate">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>身份证号</label>
+                        <input type="text" name="idCard">
+                    </div>
+                    <div class="form-group">
+                        <label>电话 *</label>
+                        <input type="text" name="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>地址</label>
+                        <input type="text" name="address">
+                    </div>
+                    <div class="form-group">
+                        <label>民族</label>
+                        <input type="text" name="nation">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>入团年份</label>
+                        <input type="number" name="joinYear" min="1900" max="2099">
+                    </div>
+                    <div class="form-group">
+                        <label>团员发展编号</label>
+                        <input type="text" name="developId">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>学历</label>
+                        <select name="education">
+                            <option value="">请选择</option>
+                            <option value="小学">小学</option>
+                            <option value="初中">初中</option>
+                            <option value="高中">高中</option>
+                            <option value="大专">大专</option>
+                            <option value="本科">本科</option>
+                            <option value="硕士">硕士</option>
+                            <option value="博士">博士</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>政治面貌</label>
+                        <select name="political">
+                            <option value="">请选择</option>
+                            <option value="群众">群众</option>
+                            <option value="共青团员">共青团员</option>
+                            <option value="中共党员">中共党员</option>
+                            <option value="民主党派">民主党派</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <input type="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label>备注</label>
+                    <textarea name="remarks" rows="3"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <a href="/volunteer/members" class="btn btn-secondary">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
