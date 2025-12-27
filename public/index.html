@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>织金县文明传播志愿服务队<br>人员管理系统</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="loginPage" class="login-container">
+      <div class="login-box">
+        <div class="login-header">
+          <img src="../img/图标.png" alt="系统图标">
+          <h1>织金县文明传播志愿服务队<br>人员管理系统</h1>
+        </div>
+
+        <div class="login-tabs">
+          <div class="login-tab active" data-tab="login">登录</div>
+          <div class="login-tab" data-tab="register">注册</div>
+        </div>
+
+        <div id="loginForm">
+          <div class="form-group">
+            <label>身份证号码</label>
+            <input type="text" id="loginIdCard" value="522425200601290031" placeholder="请输入身份证号码">
+          </div>
+          <div class="form-group">
+            <label>密码</label>
+            <input type="password" id="loginPassword" value="290031" placeholder="请输入密码">
+          </div>
+          <button class="btn btn-primary" onclick="login()">登录</button>
+        </div>
+
+        <div id="registerForm" style="display: none;">
+          <div class="form-group">
+            <label>身份证号码</label>
+            <input type="text" id="registerIdCard" placeholder="请输入身份证号码">
+          </div>
+          <div class="form-group">
+            <label>姓名</label>
+            <input type="text" id="registerName" placeholder="请输入姓名">
+          </div>
+          <div class="form-group">
+            <label>密码</label>
+            <input type="password" id="registerPassword" placeholder="请输入密码">
+          </div>
+          <div class="form-group">
+            <label>确认密码</label>
+            <input type="password" id="registerConfirmPassword" placeholder="请再次输入密码">
+          </div>
+          <div class="form-group">
+            <label>注册码</label>
+            <input type="text" id="registerCode" placeholder="请输入注册码">
+          </div>
+          <button class="btn btn-primary" onclick="register()">注册</button>
+        </div>
+
+        <div id="alert" class="alert"></div>
+      </div>
+    </div>
+
+    <div id="mainPage" class="main-container" style="display: none;">
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <img src="../img/图标.png" alt="系统图标">
+          <h2>织金县文明传播志愿服务队<br>人员管理系统</h2>
+          <p>Personnel Management System</p>
+        </div>
+
+        <div class="sidebar-menu">
+          <div class="sidebar-menu-item active" data-page="dashboard">
+            <i>📊</i>
+            <span>首页</span>
+          </div>
+          <div class="sidebar-menu-item" data-page="members">
+            <i>👥</i>
+            <span>团员信息</span>
+          </div>
+          <div class="sidebar-menu-item" data-page="activities">
+            <i>📅</i>
+            <span>活动记录</span>
+          </div>
+          <div class="sidebar-menu-item" data-page="volunteers">
+            <i>🤝</i>
+            <span>志愿者个人信息</span>
+          </div>
+          <div class="sidebar-menu-item" data-page="search">
+            <i>🔍</i>
+            <span>全局搜索</span>
+          </div>
+          <div class="sidebar-menu-item" data-page="accounts">
+            <i>👤</i>
+            <span>账号管理</span>
+          </div>
+          <div class="sidebar-menu-item" data-page="about">
+            <i>ℹ️</i>
+            <span>关于系统</span>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">👤</div>
+            <div class="user-details">
+              <h4 id="userName">用户名</h4>
+              <p id="userRole">角色</p>
+            </div>
+          </div>
+          <button class="btn btn-danger btn-sm" style="margin-top: 10px;" onclick="logout()">退出登录</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <div id="dashboardPage" class="page">
+          <div class="page-header">
+            <h1>首页</h1>
+            <p>欢迎回来，查看系统概览</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>团员人数</h3>
+              <div class="stat-value" id="memberCount">0</div>
+              <div class="stat-label">当前系统团员总数</div>
+            </div>
+            <div class="stat-card">
+              <h3>活动次数</h3>
+              <div class="stat-value" id="activityCount">0</div>
+              <div class="stat-label">已开展活动总数</div>
+            </div>
+            <div class="stat-card">
+              <h3>志愿者人数</h3>
+              <div class="stat-value" id="volunteerCount">0</div>
+              <div class="stat-label">注册志愿者总数</div>
+            </div>
+          </div>
+
+          <div class="quick-actions">
+            <div class="quick-action-card" onclick="navigateTo('members')">
+              <i>👥</i>
+              <h4>团员信息</h4>
+              <p>管理团员基本信息</p>
+            </div>
+            <div class="quick-action-card" onclick="navigateTo('activities')">
+              <i>📅</i>
+              <h4>活动记录</h4>
+              <p>查看和管理活动</p>
+            </div>
+            <div class="quick-action-card" onclick="navigateTo('volunteers')">
+              <i>🤝</i>
+              <h4>志愿者信息</h4>
+              <p>管理志愿者数据</p>
+            </div>
+            <div class="quick-action-card" onclick="navigateTo('search')">
+              <i>🔍</i>
+              <h4>全局搜索</h4>
+              <p>快速查找信息</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="membersPage" class="page" style="display: none;">
+          <div class="page-header">
+            <h1>团员信息</h1>
+            <p>管理团员基本信息</p>
+          </div>
+
+          <div class="search-bar">
+            <input type="text" id="memberSearch" placeholder="搜索团员姓名、身份证号或团员编号...">
+            <button onclick="searchMembers()">搜索</button>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-primary btn-sm" onclick="showAddMemberModal()">添加团员</button>
+            <button class="btn btn-success btn-sm" onclick="showBatchUploadModal('members')">批量上传</button>
+            <button class="btn btn-secondary btn-sm" onclick="exportMembers()">导出</button>
+          </div>
+
+          <div class="table-container">
+            <table id="membersTable">
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>性别</th>
+                  <th>身份证号</th>
+                  <th>出生年月</th>
+                  <th>民族</th>
+                  <th>手机号码</th>
+                  <th>政治面貌</th>
+                  <th>团员编号</th>
+                  <th>入团时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="membersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="activitiesPage" class="page" style="display: none;">
+          <div class="page-header">
+            <h1>活动记录</h1>
+            <p>管理活动信息</p>
+          </div>
+
+          <div class="search-bar">
+            <input type="text" id="activitySearch" placeholder="搜索活动名称或地点...">
+            <button onclick="searchActivities()">搜索</button>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-primary btn-sm" onclick="showAddActivityModal()">添加活动</button>
+          </div>
+
+          <div class="table-container">
+            <table id="activitiesTable">
+              <thead>
+                <tr>
+                  <th>活动名称</th>
+                  <th>活动地点</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
+                  <th>时长(小时)</th>
+                  <th>参与人数</th>
+                  <th>备注</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="activitiesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="volunteersPage" class="page" style="display: none;">
+          <div class="page-header">
+            <h1>志愿者个人信息</h1>
+            <p>管理志愿者基本信息</p>
+          </div>
+
+          <div class="search-bar">
+            <input type="text" id="volunteerSearch" placeholder="搜索志愿者姓名或身份证号...">
+            <button onclick="searchVolunteers()">搜索</button>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-success btn-sm" onclick="showBatchUploadModal('volunteers')">批量上传</button>
+          </div>
+
+          <div class="table-container">
+            <table id="volunteersTable">
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>性别</th>
+                  <th>身份证号</th>
+                  <th>出生年月</th>
+                  <th>民族</th>
+                  <th>手机号码</th>
+                  <th>地址</th>
+                  <th>志愿时长</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="volunteersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="searchPage" class="page" style="display: none;">
+          <div class="page-header">
+            <h1>全局搜索</h1>
+            <p>快速查找团员、活动和志愿者信息</p>
+          </div>
+
+          <div class="search-bar">
+            <input type="text" id="globalSearch" placeholder="输入关键词搜索...">
+            <button onclick="globalSearch()">搜索</button>
+          </div>
+
+          <div id="searchResults" class="search-results"></div>
+        </div>
+
+        <div id="accountsPage" class="page" style="display: none;">
+          <div class="page-header">
+            <h1>账号管理</h1>
+            <p>管理系统账号</p>
+          </div>
+
+          <div id="adminActions" style="display: none;">
+            <div class="action-buttons">
+              <button class="btn btn-primary btn-sm" onclick="showAddUserModal()">添加用户</button>
+              <button class="btn btn-success btn-sm" onclick="showAddCodeModal()">添加注册码</button>
+            </div>
+
+            <h3>系统用户</h3>
+            <div class="table-container" style="margin-bottom: 30px;">
+              <table id="usersTable">
+                <thead>
+                  <tr>
+                    <th>身份证号</th>
+                    <th>姓名</th>
+                    <th>角色</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody"></tbody>
+              </table>
+            </div>
+
+            <h3>注册码</h3>
+            <div class="table-container">
+              <table id="codesTable">
+                <thead>
+                  <tr>
+                    <th>注册码</th>
+                    <th>状态</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="codesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="userActions">
+            <div class="table-container">
+              <table>
+                <tbody>
+                  <tr>
+                    <td><strong>身份证号</strong></td>
+                    <td id="currentUserCard"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>姓名</strong></td>
+                    <td id="currentUserName"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>角色</strong></td>
+                    <td id="currentUserRole"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 20px;" onclick="showEditUserModal()">修改个人信息</button>
+          </div>
+        </div>
+
+        <div id="aboutPage" class="page" style="display: none;">
+          <div class="page-header">
+            <h1>关于系统</h1>
+            <p>系统信息</p>
+          </div>
+
+          <div class="about-content">
+            <h2>织金县文明传播志愿服务队<br>人员管理系统</h2>
+            <p>本系统是一个综合性的人员管理平台，旨在帮助组织高效管理团员信息、活动记录和志愿者数据。</p>
+            <p>系统功能包括：</p>
+            <ul style="margin-left: 20px; margin-bottom: 20px;">
+              <li>团员信息管理：支持单个添加和批量导入团员信息</li>
+              <li>活动记录管理：记录活动详情和参与人员</li>
+              <li>志愿者信息管理：管理志愿者基本信息和志愿时长</li>
+              <li>全局搜索：快速检索各类信息</li>
+              <li>账号管理：支持多用户权限管理</li>
+            </ul>
+
+            <div class="version">
+              <p><strong>版本：</strong>1.0.0</p>
+              <p><strong>版权所有：</strong>织金县文明传播志愿服务队</p>
+              <p><strong>技术支持：</strong>技术团队</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">标题</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" id="modalFooter"></div>
+    </div>
+  </div>
+
+  <div id="alert" class="alert"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
